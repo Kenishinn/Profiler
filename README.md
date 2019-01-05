@@ -1,2 +1,1 @@
-# Profiler
-C Project
+# Profiler by Facquet Jérémie and Rozalski Romain
