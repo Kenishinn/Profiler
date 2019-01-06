@@ -1,9 +1,16 @@
 #include "ihm.h"
 
-void create_screen(char* window_name, char* icone_name) {
-	MLV_create_window(window_name, icone_name, SCREEN_WIDTH, SCREEN_HEIGHT);
+/* Create a screen with macro definitions of ihm.h */
+void create_screen() {
+	MLV_create_window(WINDOW_NAME, ICONE_NAME, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
+void exit_profiler() {
+	MLV_free_window();
+	exit(0);
+}
+
+/* Print menu possibilities on the window screen, from 0 to the macro NB_ARGS (centered with the screen) */
 void print_menu(int x, int y, int option) {
 	int corner = x / 4;
 	int width = x / 2;
@@ -15,7 +22,7 @@ void print_menu(int x, int y, int option) {
 
 	MLV_clear_window(MLV_COLOR_BLACK);
 
-	for (i=0; i!=NB_ARGS; i++) {
+	for (i=0; i<NB_ARGS; i++) {
 		switch(i) {
 			case 0:
 				strcpy(string, "New");
@@ -41,7 +48,7 @@ void print_menu(int x, int y, int option) {
 	MLV_update_window();
 }
 
-void choose_menu() {
+int choose_menu() {
 	int option = 0;
 	MLV_Keyboard_button key;	
 	
@@ -59,5 +66,16 @@ void choose_menu() {
 		else if (option >= NB_ARGS)
 			option = 0;
 
-	}while(key != MLV_KEYBOARD_SPACE);
+	}while(key != MLV_KEYBOARD_RETURN);
+
+	return option;
+} 
+
+void menu_choices(int option) {
+	if (option == 2)
+		exit_profiler(); /* Close the screen and exit the profiler */
+	else if (option == 1)
+		printf("Your function here (SAMPLE)\n"); /* What is done when "Sample" is selected */
+	else if (option == 0)
+		printf("Your function here (FILE)\n"); /* What is done when "File" is selected */
 }
